@@ -1,3 +1,4 @@
+// ----------------------------------HTMl Elements connected --------------------------------
 const inputMessage = document.querySelector("#input-message");
 const chatBody = document.querySelector(".chat-body");
 const sendButton = document.querySelector("#sendButton");
@@ -11,7 +12,7 @@ const userData = {
   message: null
 }
 
-// create message element
+// --------------------------------------create message element----------------------------------------
 const createMessageElement = (content, classes) => {
   const div = document.createElement("div");
   div.classList.add("user-message", classes);
@@ -20,7 +21,7 @@ const createMessageElement = (content, classes) => {
 }
 
 
-// Handle out going message function
+// ----------------------------------Handle out going message function----------------------------------------
 const handleOutgoingMessage = (e) => {
   e.preventDefault();
 
@@ -28,13 +29,14 @@ const handleOutgoingMessage = (e) => {
 
   inputMessage.value = "";
 
-  // Creaate and displsy user message
+  // ----------------------------------Creaate and displsy user message-----------------------------------------
   const messageContent = `<div class="user-meg w-auto bg-blue-500 p-2 font-medium text-xs text-white"></div>`;
   const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
   outgoingMessageDiv.querySelector(".user-meg").textContent = userData.message;
   chatBody.appendChild(outgoingMessageDiv);
   chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
 
+  // ------AI bot message output---------
   setTimeout(() => {
     const messageContent = `<img src="charbot.png" class="w-[40px] py-1 bg-white rounded-[50%]" alt="">
                             <div class="chatbot-message bg-blue-100 p-2 font-medium text-sm"></div>`;
@@ -45,7 +47,7 @@ const handleOutgoingMessage = (e) => {
   }, 500);
 }
 
-// generate bot response
+// ------------------------------------------generate bot response-----------------------------------------
 const generateBotResponse = async (incomingMessageDiv) => {
   const messageElement = incomingMessageDiv.querySelector(".chatbot-message");
 
@@ -63,6 +65,7 @@ const generateBotResponse = async (incomingMessageDiv) => {
     }),
   }
 
+// display bot response 
   try {
     const response = await fetch(API_URL, requestOption);
     const data = await response.json();
@@ -75,11 +78,12 @@ const generateBotResponse = async (incomingMessageDiv) => {
   } finally {
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
   }
-
 }
 
 
-// add EventListener
+// ------------------------------------------add EventListener----------------------------------
+
+// input event listener
 inputMessage.addEventListener("keydown", (e) => {
   const userMessage = e.target.value.trim();
   
@@ -89,4 +93,5 @@ inputMessage.addEventListener("keydown", (e) => {
   }
 })
 
+// send button event listener
 sendButton.addEventListener("click", (e) => handleOutgoingMessage(e))
