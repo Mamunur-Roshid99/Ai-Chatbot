@@ -1,9 +1,10 @@
 const inputMessage = document.querySelector("#input-message");
 const chatBody = document.querySelector(".chat-body");
 const sendButton = document.querySelector("#sendButton");
+const fileInput = document.querySelector("#file-input");
 
 const userData = {
-    message: null
+    message: null,
 }
 
 // Api setup
@@ -32,9 +33,11 @@ const generateBotResponse = async (incomingMessageDiv) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      contents: [{
-        parts: [{ text: userData.message}]
-      }]
+      contents: [
+        {
+          parts: [
+            { text: userData.message }]
+        }],
     }),
   };
 
@@ -97,3 +100,4 @@ inputMessage.addEventListener("keydown", (e)=> {
 // Send message button click event
 
 sendButton.addEventListener("click", (e) => handleOutgoingMessage(e))
+
